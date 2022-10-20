@@ -12,6 +12,15 @@ const userSchema = mongoose.Schema(
       trim: true,
     },
     email: {
+      type:String,
+      required:true,
+      trim:true,
+      unique:true,
+      lowercase:true,
+      validate:{
+        validator:(v)=>validator.isEmail(v)
+      }
+    
     },
     password: {
       type: String,
@@ -22,8 +31,12 @@ const userSchema = mongoose.Schema(
           );
         }
       },
+      minLength:8
     },
     walletMoney: {
+      type:Number,
+      required:true,
+      default:500
     },
     address: {
       type: String,
@@ -43,6 +56,7 @@ const userSchema = mongoose.Schema(
  * @returns {Promise<boolean>}
  */
 userSchema.statics.isEmailTaken = async function (email) {
+  return this.find({email:email})
 };
 
 
@@ -56,3 +70,7 @@ userSchema.statics.isEmailTaken = async function (email) {
 /**
  * @typedef User
  */
+
+const User = mongoose.model('users',userSchema);
+
+module.exports = {User};
