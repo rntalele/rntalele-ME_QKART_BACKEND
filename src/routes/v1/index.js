@@ -17,4 +17,8 @@ router.use('/auth',authRoute);
 
 router.use("/products", productRoute);
 
+const cartRoute = require("./cart.route");
+
+router.use("/cart", cartRoute);
+
 module.exports = router;
